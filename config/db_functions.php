@@ -1,0 +1,105 @@
+<?php
+include 'database.php';
+
+// Los if estan para comprabar si la consulta se ejecuto correctamente
+// Función para registrar un nuevo usuario
+function registrarUsuario($nombre, $apellidos, $email, $contraseña, $rol, $telefono) {
+    global $conn;  // lo mismo que pasarlo como parametro
+
+    $stmt = $conn->prepare("INSERT INTO Usuarios (nombre, apellidos, email, contraseña, rol, telefono) VALUES (?, ?, ?, ?, ?, ?)");
+    if ($stmt) {
+        $hashed_password = password_hash($contraseña, PASSWORD_DEFAULT);  // Encriptamos la contraseña
+        $stmt->bind_param("ssssss", $nombre, $apellidos, $email, $hashed_password, $rol, $telefono);
+        return $stmt->execute(); 
+    } else {
+        return false;
+    }
+}
+
+// Función para agregar un producto
+function agregarProducto($nombre, $descripcion, $precioUnitario, $estado, $stock, $vendedor_id) {
+    global $conn;
+
+    $stmt = $conn->prepare("INSERT INTO Productos (nombre, descripcion, precioUnitario, estado, stock, vendedor_id) VALUES (?, ?, ?, ?, ?, ?)");
+    if ($stmt) {
+        $stmt->bind_param("ssdsii", $nombre, $descripcion, $precioUnitario, $estado, $stock, $vendedor_id);
+        return $stmt->execute();
+    } else {
+        return false;
+    }
+}
+
+// Función para obtener productos
+function obtenerProductos() {
+    global $conn;
+
+    $result = $conn->query("SELECT * FROM Productos");
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+function obtenerProductoPorId($id){
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM Productos WHERE id = ?");
+    if ($stmt) {
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    } else {
+        return [];
+    }
+}
+
+// Función para actualizar un producto
+function actualizarProducto($id, $nombre, $descripcion, $precioUnitario, $estado, $stock) {
+    global $conn;
+
+    $stmt = $conn->prepare("UPDATE Productos SET nombre = ?, descripcion = ?, precioUnitario = ?, estado = ?, stock = ? WHERE id = ?");
+    if ($stmt) {
+        $stmt->bind_param("ssdsi", $nombre, $descripcion, $precioUnitario, $estado, $stock);
+        return $stmt->execute();
+    } else {
+        return false;
+    }
+}
+
+// Función para eliminar un producto
+function eliminarProducto($id) {
+    global $conn;
+
+    $stmt = $conn->prepare("DELETE FROM Productos WHERE id = ?");
+    if ($stmt) {
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    } else {
+        return false;
+    }
+}
+
+// Función para agregar un producto al carrito
+function agregarAlCarrito($usuario_id, $producto_id, $cantidad) {
+    global $conn;
+
+    $stmt = $conn->prepare("INSERT INTO Carrito (usuario_id, producto_id, cantidad) VALUES (?, ?, ?)");
+    if ($stmt) {
+        $stmt->bind_param("iii", $usuario_id, $producto_id, $cantidad);
+        return $stmt->execute();
+    } else {
+        return false;
+    }
+}
+
+// Función para obtener el carrito de un usuario
+function obtenerCarrito($usuario_id) {
+    global $conn;
+
+    $stmt = $conn->prepare("SELECT Productos.nombre, Carrito.cantidad FROM Carrito INNER JOIN Productos ON Carrito.producto_id = Productos.id WHERE Carrito.usuario_id = ?");
+    if ($stmt) {
+        $stmt->bind_param("i", $usuario_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        return [];
+    }
+}
+?>
