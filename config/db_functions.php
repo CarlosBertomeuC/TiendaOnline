@@ -36,6 +36,7 @@ function obtenerProductos() {
     $result = $conn->query("SELECT * FROM Productos");
     return $result->fetch_all(MYSQLI_ASSOC);
 }
+// Función para obtener productos por vendedor
 function obtenerProductoPorId($id){
     global $conn;
     $stmt = $conn->prepare("SELECT * FROM Productos WHERE id = ?");
@@ -102,4 +103,76 @@ function obtenerCarrito($usuario_id) {
         return [];
     }
 }
+
+// Obtener todas las categorías
+function obtenerCategorias() {
+    global $conn;
+    $sql = "SELECT * FROM Categorias";
+    $result = $conn->query($sql);
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+// Obtener una categoría por ID
+function obtenerCategoriaPorId($id) {
+    global $conn;
+    $sql = "SELECT * FROM Categorias WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc();
+}
+
+// Agregar una nueva categoría
+function agregarCategoria($nombre_categoria) {
+    global $conn;
+    $sql = "INSERT INTO Categorias (nombre_categoria) VALUES (?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $nombre_categoria);
+    return $stmt->execute();
+}
+
+// Actualizar una categoría existente
+function actualizarCategoria($id, $nombre_categoria) {
+    global $conn;
+    $sql = "UPDATE Categorias SET nombre_categoria = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('si', $nombre_categoria, $id);
+    return $stmt->execute();
+}
+
+// Eliminar una categoría
+function eliminarCategoria($id) {
+    global $conn;
+    $sql = "DELETE FROM Categorias WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $id);
+    return $stmt->execute();
+}
+// Función para obtener un usuario por email
+function obtenerUsuarioPorEmail($email) {
+    global $conn;
+
+    $stmt = $conn->prepare("SELECT * FROM Usuarios WHERE email = ?");
+    if ($stmt) {
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();//hacerlo asi porque devuelve un objeto, no un booleano
+        return $result->fetch_assoc();
+    } else {
+        return null;
+    }
+}
+
+function guardarCarritoEnBD($usuario_id, $carrito) {
+    global $conn;
+    foreach ($carrito as $producto_id => $producto) {
+        $sql = "INSERT INTO Carrito (usuario_id, producto_id, cantidad) VALUES (?, ?, ?)
+                ON DUPLICATE KEY UPDATE cantidad = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iiii", $usuario_id, $producto_id, $producto['cantidad'], $producto['cantidad']);
+        $stmt->execute();
+    }
+}
+
+
 ?>
