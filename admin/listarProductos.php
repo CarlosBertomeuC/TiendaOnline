@@ -19,7 +19,7 @@ $productos = obtenerProductos();
 </head>
 <body>
     <h1>Lista de Productos</h1>
-    <a href="agregar_producto.php">Agregar Producto</a>
+    <a href="agregarProductos.php">Agregar Producto</a>
     <table border="1">
         <thead>
             <tr>
@@ -40,8 +40,8 @@ $productos = obtenerProductos();
                 <td><?php echo $producto['precioUnitario']; ?> €</td>
                 <td><?php echo $producto['stock']; ?></td>
                 <td>
-                    <a href="editar_producto.php?id=<?php echo $producto['id']; ?>">Editar</a> |
-                    <a href="eliminar_producto.php?id=<?php echo $producto['id']; ?>" onclick="return confirm('¿Estás seguro de eliminar este producto?');">Eliminar</a>
+                    <a href="editarProductos.php?id=<?php echo $producto['id']; ?>">Editar</a> |
+                    <a href="eliminarProductos.php?id=<?php echo $producto['id']; ?>" onclick="return confirm('¿Estás seguro de eliminar este producto?');">Eliminar</a>
                 </td>
             </tr>
             <?php endforeach; ?>

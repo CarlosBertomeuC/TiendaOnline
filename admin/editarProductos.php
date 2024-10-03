@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stock = $_POST['stock'];
 
     if (actualizarProducto($id, $nombre, $descripcion, $precioUnitario, $estado, $stock)) {
-        header('Location: productos.php');
+        header('Location: listarProductos.php');
     } else {
         echo "Error al actualizar el producto.";
     }

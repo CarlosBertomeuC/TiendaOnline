@@ -1,23 +1,40 @@
 <?php
-include '../config/db_functions.php';
-session_start();
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nombre = $_POST['nombre'];
-    $apellidos = $_POST['apellidos'];
-    $email = $_POST['email'];
-    $password = $_POST['contraseña'];
-    $rol = 'cliente'; // Por defecto todos los usuarios son clientes
-    $telefono = $_POST['telefono'];
+    $nombre = trim($_POST['nombre']);
+    $apellidos = trim($_POST['apellidos']);
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $contraseña = $_POST['contraseña'];
+    $telefono = trim($_POST['telefono']);
+    $error = [];
 
-    if (registrarUsuario($nombre, $apellidos, $email, $password, $rol, $telefono)) {
-        header('Location: login.php');
-        exit();
+    // Validar que no estén vacíos
+    if (empty($nombre) || empty($apellidos) || empty($email) || empty($contraseña) || empty($telefono)) {
+        $error[] = "Todos los campos son obligatorios.";
+    }
+
+    // Validar el formato del email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error[] = "Formato de email no válido.";
+    }
+
+    // Validar la longitud de la contraseña (mínimo 8 caracteres)
+    if (strlen($contraseña) < 8) {
+        $error[] = "La contraseña debe tener al menos 8 caracteres.";
+    }
+
+    // Si no hay errores, procesamos el registro
+    if (empty($error)) {
+        registrarUsuario($nombre, $apellidos, $email, password_hash($contraseña, PASSWORD_DEFAULT), 'cliente', $telefono);
+        echo "Registro exitoso.";
     } else {
-        echo "Error al registrar el usuario.";
+        // Mostrar errores
+        foreach ($error as $err) {
+            echo $err . "<br>";
+        }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">

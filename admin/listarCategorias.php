@@ -21,7 +21,7 @@ $categorias = obtenerCategorias();
 </head>
 <body>
     <h1>Lista de Categorías</h1>
-    <a href="agregar_categoria.php">Agregar Categoría</a>
+    <a href="agregarCategorias.php">Agregar Categoría</a>
     <table border="1">
         <thead>
             <tr>
@@ -36,8 +36,8 @@ $categorias = obtenerCategorias();
                 <td><?php echo $categoria['id']; ?></td>
                 <td><?php echo $categoria['nombre_categoria']; ?></td>
                 <td>
-                    <a href="editar_categoria.php?id=<?php echo $categoria['id']; ?>">Editar</a> |
-                    <a href="eliminar_categoria.php?id=<?php echo $categoria['id']; ?>" onclick="return confirm('¿Estás seguro de eliminar esta categoría?');">Eliminar</a>
+                    <a href="editarCategorias.php?id=<?php echo $categoria['id']; ?>">Editar</a> |
+                    <a href="eliminarCategorias.php?id=<?php echo $categoria['id']; ?>" onclick="return confirm('¿Estás seguro de eliminar esta categoría?');">Eliminar</a>
                 </td>
             </tr>
             <?php endforeach; ?>

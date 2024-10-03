@@ -36,6 +36,22 @@ function obtenerProductos() {
     $result = $conn->query("SELECT * FROM Productos");
     return $result->fetch_all(MYSQLI_ASSOC);
 }
+//Funcion para obtener productos por categoria
+function obtenerProductosPorCategoria($categoria_id = null) {
+    global $conn;
+    if ($categoria_id) {
+        $sql = "SELECT * FROM Productos 
+                JOIN ProductoCategorias ON Productos.id = ProductoCategorias.producto_id
+                WHERE ProductoCategorias.categoria_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $categoria_id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        return obtenerProductos();
+    }
+}
+
 // Función para obtener productos por vendedor
 function obtenerProductoPorId($id){
     global $conn;
@@ -174,5 +190,30 @@ function guardarCarritoEnBD($usuario_id, $carrito) {
     }
 }
 
+// Función para crear un pedido
+function crearPedido($usuario_id, $precioTotal, $direccion_envio) {
+    global $conn;
+    
+    $stmt = $conn->prepare("INSERT INTO Pedidos (usuario_id, precioTotal, direccion_envio, estado) VALUES (?, ?, ?, 'pendiente')");
+    $stmt->bind_param("ids", $usuario_id, $precioTotal, $direccion_envio);
+    
+    if ($stmt->execute()) {
+        return $stmt->insert_id; // Devolver el ID del pedido recién creado
+    } else {
+        die("Error al crear el pedido: " . $stmt->error);
+    }
+}
+
+// Función para crear una línea de pedido
+function crearLineaPedido($pedido_id, $producto_id, $cantidad, $precioUnitario) {
+    global $conn;
+    
+    $stmt = $conn->prepare("INSERT INTO LineaPedidos (pedido_id, producto_id, cantidad, precioUnitario) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("iiid", $pedido_id, $producto_id, $cantidad, $precioUnitario);
+    
+    if (!$stmt->execute()) {
+        die("Error al crear la línea de pedido: " . $stmt->error);
+    }
+}
 
 ?>

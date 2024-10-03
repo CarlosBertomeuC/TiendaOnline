@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $vendedor_id = $_SESSION['id'];
 
     if (agregarProducto($nombre, $descripcion, $precioUnitario, $estado, $stock, $vendedor_id)) {
-        header('Location: productos.php');
+        header('Location: listarProductos.php');
     } else {
         echo "Error al agregar el producto.";
     }

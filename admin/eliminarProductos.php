@@ -1,6 +1,7 @@
 <?php
 include '../config/db_functions.php';
 session_start();
+
 if ($_SESSION['rol'] != 'administrador') {
     header('Location: ../public/login.php');
     exit();
@@ -9,7 +10,7 @@ if ($_SESSION['rol'] != 'administrador') {
 $id = $_GET['id'];
 
 if (eliminarProducto($id)) {
-    header('Location: productos.php');
+    header('Location: listarProductos.php');
 } else {
     echo "Error al eliminar el producto.";
 }

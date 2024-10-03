@@ -2,7 +2,6 @@
 include '../config/db_functions.php';
 session_start();
 
-// Verificar si el usuario es administrador
 if ($_SESSION['rol'] != 'administrador') {
     header('Location: ../public/login.php');
     exit();
@@ -15,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre_categoria = $_POST['nombre_categoria'];
 
     if (actualizarCategoria($id, $nombre_categoria)) {
-        header('Location: categorias.php');
+        header('Location: listarCategorias.php');
     } else {
         echo "Error al actualizar la categoría.";
     }
