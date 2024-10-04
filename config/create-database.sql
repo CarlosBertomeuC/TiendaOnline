@@ -2,6 +2,11 @@ DROP DATABASE IF EXISTS tienda_videojuegos;
 CREATE DATABASE tienda_videojuegos;
 USE tienda_videojuegos;
 
+DROP TABLE IF EXISTS ProductoCategorias;
+DROP TABLE IF EXISTS Productos;
+DROP TABLE IF EXISTS Categorias;
+DROP TABLE IF EXISTS Usuarios;
+
 -- Tabla Usuarios
 CREATE TABLE Usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,9 +27,8 @@ CREATE TABLE Productos (
     precioUnitario FLOAT NOT NULL,
     estado ENUM('nuevo', 'usado') NOT NULL,
     stock INT NOT NULL,
-    vendedor_id INT,
     fecha_publicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (vendedor_id) REFERENCES Usuarios(id) ON DELETE SET NULL
+    imagen VARCHAR(255) NOT NULL
 );
 
 -- Tabla Categorias

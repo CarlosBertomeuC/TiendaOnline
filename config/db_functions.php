@@ -17,12 +17,12 @@ function registrarUsuario($nombre, $apellidos, $email, $contraseña, $rol, $tele
 }
 
 // Función para agregar un producto
-function agregarProducto($nombre, $descripcion, $precioUnitario, $estado, $stock, $vendedor_id) {
+function agregarProducto($nombre, $descripcion, $precioUnitario, $estado, $stock, $imagen) {
     global $conn;
 
-    $stmt = $conn->prepare("INSERT INTO Productos (nombre, descripcion, precioUnitario, estado, stock, vendedor_id) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO Productos (nombre, descripcion, precioUnitario, estado, stock, imagen) VALUES (?, ?, ?, ?, ?, ?)");
     if ($stmt) {
-        $stmt->bind_param("ssdsii", $nombre, $descripcion, $precioUnitario, $estado, $stock, $vendedor_id);
+        $stmt->bind_param("ssdsis", $nombre, $descripcion, $precioUnitario, $estado, $stock, $imagen);
         return $stmt->execute();
     } else {
         return false;
@@ -51,7 +51,7 @@ function obtenerProductosPorCategoria($categoria_id = null) {
         return obtenerProductos();
     }
 }
-
+//COMPROBAR USO
 // Función para obtener productos por vendedor
 function obtenerProductoPorId($id){
     global $conn;
