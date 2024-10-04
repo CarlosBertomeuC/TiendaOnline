@@ -22,7 +22,7 @@ $categorias = obtenerCategorias();
 
     <!-- Banner promocional -->
     <div class="banner">
-        <img src="../assets/images/banner.jpg" alt="Promociones">
+        <img src="../uploads/extra/baner.png" alt="Promociones">
     </div>
 
     <!-- Ofertas especiales -->
@@ -48,6 +48,7 @@ $categorias = obtenerCategorias();
     <section class="categorias">
         <h2>Explora por Categorías</h2>
         <div class="categorias-lista">
+        <a href="index.php" class="boton-todas-categorias">Todas las categorías</a>
             <?php foreach ($categorias as $categoria): ?>
                 <a href="index.php?categoria=<?php echo $categoria['id']; ?>"><?php echo htmlspecialchars($categoria['nombre_categoria']); ?></a>
             <?php endforeach; ?>

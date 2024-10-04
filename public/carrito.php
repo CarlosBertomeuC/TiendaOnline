@@ -1,9 +1,9 @@
 <?php
 session_start();
-
+include '../includes/header.php';
 // Verificar si el carrito está vacío
 if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
-    echo "Tu carrito está vacío.";
+    echo "Tu carrito está vacío. <a href='index.php'>Volver a la tienda</a>";
     exit;
 }
 
@@ -20,7 +20,6 @@ if (isset($_POST['actualizar'])) {
     exit;
 }
 ?>
-
 <h2>Carrito de Compras</h2>
 
 <form method="post">
@@ -34,22 +33,24 @@ if (isset($_POST['actualizar'])) {
         <?php
         $total = 0;
         foreach ($_SESSION['carrito'] as $producto) {
-            $subtotal = $producto['precio'] * $producto['cantidad'];
+            $precio = floatval($producto['precio']);
+            $cantidad = intval($producto['cantidad']);
+            $subtotal = $precio * $cantidad;
             $total += $subtotal;
-            ?>
-            <tr>
-                <td><?php echo $producto['nombre']; ?></td>
-                <td>€<?php echo $producto['precio']; ?></td>
-                <td>
-                    <input type="number" name="cantidad[<?php echo $producto['id']; ?>]" value="<?php echo $producto['cantidad']; ?>" min="0">
-                </td>
-                <td>€<?php echo $subtotal; ?></td>
-            </tr>
+        ?>
+        <tr>
+            <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
+            <td><?php echo htmlspecialchars($precio); ?></td>
+            <td>
+                <input type="number" name="cantidad[<?php echo $producto['id']; ?>]" value="<?php echo htmlspecialchars($cantidad); ?>" min="0">
+            </td>
+            <td><?php echo htmlspecialchars($subtotal); ?></td>
+        </tr>
         <?php } ?>
+        <tr>
+            <td colspan="3">Total</td>
+            <td><?php echo htmlspecialchars($total); ?></td>
+        </tr>
     </table>
-
-    <p>Total: €<?php echo $total; ?></p>
-
     <button type="submit" name="actualizar">Actualizar Carrito</button>
-    <a href="checkout.php">Proceder al Pago</a>
 </form>

@@ -18,9 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['nombre'] = $usuario['nombre'];
             $_SESSION['rol'] = $usuario['rol'];
 
-            // Guardar carrito en BD
-            if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
-                guardarCarritoEnBD($usuario['id'], $_SESSION['carrito']);
+            // Obtener el carrito de la sesión
+            $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
+
+            // Guardar el carrito en la base de datos
+            try {
+                guardarCarritoEnBD($usuario['id'], $carrito);
+                echo "Carrito guardado exitosamente.";
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
             }
 
             // Redirigir según el rol

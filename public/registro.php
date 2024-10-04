@@ -1,4 +1,7 @@
 <?php
+include '../config/db_functions.php';
+session_start();
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = trim($_POST['nombre']);
     $apellidos = trim($_POST['apellidos']);
@@ -24,8 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Si no hay errores, procesamos el registro
     if (empty($error)) {
-        registrarUsuario($nombre, $apellidos, $email, password_hash($contraseña, PASSWORD_DEFAULT), 'cliente', $telefono);
+        registrarUsuario($nombre, $apellidos, $email, $contraseña, 'cliente', $telefono);
         echo "Registro exitoso.";
+        header('Location: login.php');
     } else {
         // Mostrar errores
         foreach ($error as $err) {

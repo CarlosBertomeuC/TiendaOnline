@@ -1,9 +1,9 @@
 <?php
 session_start();
-
+include '../includes/header.php';
 include '../config/db_functions.php';
 
-//Comprobaciones varias
+// Comprobaciones varias
 if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
     echo "Tu carrito está vacío. <a href='index.php'>Volver a la tienda</a>";
     exit();
@@ -17,8 +17,28 @@ if (!isset($_SESSION['usuario_id'])) {
 // Obtener el total del carrito
 $total = 0;
 foreach ($_SESSION['carrito'] as $producto) {
-    $total += $producto['precio'] * $producto['cantidad'];
+    $precio = floatval($producto['precio']);
+    $cantidad = intval($producto['cantidad']);
+    $total += $precio * $cantidad;
 }
+
+// Mostrar los productos del carrito
+echo "<h1>Tu Carrito</h1>";
+echo "<table border='1'>";
+echo "<tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Total</th></tr>";
+foreach ($_SESSION['carrito'] as $producto) {
+    $precio = floatval($producto['precio']);
+    $cantidad = intval($producto['cantidad']);
+    $totalProducto = $precio * $cantidad;
+    echo "<tr>";
+    echo "<td>{$producto['nombre']}</td>";
+    echo "<td>\${$precio}</td>";
+    echo "<td>{$cantidad}</td>";
+    echo "<td>\${$totalProducto}</td>";
+    echo "</tr>";
+}
+echo "<tr><td colspan='3'>Total</td><td>\${$total}</td></tr>";
+echo "</table>";
 
 // Procesar el formulario de checkout
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -42,12 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <!-- Formulario de checkout -->
-<h2>Checkout</h2>
-<form method="post" action="checkout.php">
+<h2>Dirección de Envío</h2>
+<form method="POST" action="">
     <label for="direccion_envio">Dirección de Envío:</label>
-    <input type="text" name="direccion_envio" required>
-    
-    <p>Total a pagar: €<?php echo $total; ?></p>
-    
-    <button type="submit">Confirmar Pedido</button>
+    <input type="text" id="direccion_envio" name="direccion_envio" required>
+    <br>
+    <button type="submit">Realizar Pedido</button>
 </form>

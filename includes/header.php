@@ -1,4 +1,5 @@
 <header>
+<link rel="stylesheet" href="../assets/css/styles.css">
     <div class="navbar">
         <div class="logo">
             <h1><a href="index.php">Tienda de Videojuegos</a></h1>
@@ -7,7 +8,7 @@
             <li><a href="index.php">Inicio</a></li>
             <li><a href="carrito.php">Carrito</a></li>
             <li><a href="checkout.php">Finalizar Compra</a></li>
-            <?php if (isset($_SESSION['usuario'])): ?>
+            <?php if (isset($_SESSION['usuario_id'])): ?>
                 <li><a href="logout.php">Cerrar Sesión</a></li>
             <?php else: ?>
                 <li><a href="login.php">Iniciar Sesión</a></li>

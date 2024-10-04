@@ -53,17 +53,13 @@ function obtenerProductosPorCategoria($categoria_id = null) {
 }
 //COMPROBAR USO
 // Función para obtener productos por vendedor
-function obtenerProductoPorId($id){
+function obtenerProductoPorId($producto_id) {
     global $conn;
     $stmt = $conn->prepare("SELECT * FROM Productos WHERE id = ?");
-    if ($stmt) {
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
-    } else {
-        return [];
-    }
+    $stmt->bind_param("i", $producto_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
 }
 
 // Función para actualizar un producto
@@ -182,6 +178,17 @@ function obtenerUsuarioPorEmail($email) {
 function guardarCarritoEnBD($usuario_id, $carrito) {
     global $conn;
     foreach ($carrito as $producto_id => $producto) {
+        // Verificar que el producto_id existe en la tabla Productos
+        $stmt = $conn->prepare("SELECT id FROM Productos WHERE id = ?");
+        $stmt->bind_param("i", $producto_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows == 0) {
+            // Si el producto_id no existe, lanzar una excepción o manejar el error
+            throw new Exception("El producto con ID $producto_id no existe en la tabla Productos.");
+        }
+
+        // Insertar o actualizar el carrito
         $sql = "INSERT INTO Carrito (usuario_id, producto_id, cantidad) VALUES (?, ?, ?)
                 ON DUPLICATE KEY UPDATE cantidad = ?";
         $stmt = $conn->prepare($sql);
