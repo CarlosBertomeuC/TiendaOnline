@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre_categoria = $_POST['nombre_categoria'];
 
     if (agregarCategoria($nombre_categoria)) {
-        header('Location: categorias.php');
+        header('Location: ListarCategorias.php');
     } else {
         echo "Error al agregar la categoría.";
     }

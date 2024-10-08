@@ -53,7 +53,7 @@ CREATE TABLE Pedidos (
     precioTotal FLOAT NOT NULL,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     direccion_envio VARCHAR(255),
-    estado ENUM('pendiente', 'enviado', 'entregado') NOT NULL,
+    estado ENUM('carrito', 'enviado', 'entregado') NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES Usuarios(id) ON DELETE SET NULL
 );
 
@@ -69,13 +69,14 @@ CREATE TABLE LineaPedidos (
 );
 
 -- Tabla Carrito
-CREATE TABLE Carrito (
+CREATE TABLE carrito (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT,
-    producto_id INT,
+    usuario_id INT NOT NULL,
+    producto_id INT NOT NULL,
     cantidad INT NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES Usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (producto_id) REFERENCES Productos(id) ON DELETE CASCADE
+    estado VARCHAR(50) NOT NULL DEFAULT 'carrito',
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
 );
 
 -- Tabla Reseñas

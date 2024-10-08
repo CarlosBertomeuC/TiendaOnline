@@ -104,16 +104,11 @@ function agregarAlCarrito($usuario_id, $producto_id, $cantidad) {
 // Función para obtener el carrito de un usuario
 function obtenerCarrito($usuario_id) {
     global $conn;
-
-    $stmt = $conn->prepare("SELECT Productos.nombre, Carrito.cantidad FROM Carrito INNER JOIN Productos ON Carrito.producto_id = Productos.id WHERE Carrito.usuario_id = ?");
-    if ($stmt) {
-        $stmt->bind_param("i", $usuario_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
-    } else {
-        return [];
-    }
+    $stmt = $conn->prepare("SELECT c.producto_id AS id, c.cantidad, p.nombre, p.precioUnitario AS precio FROM carrito c JOIN productos p ON c.producto_id = p.id WHERE c.usuario_id = ? AND c.estado = 'carrito'");
+    $stmt->bind_param("i", $usuario_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 // Obtener todas las categorías
@@ -221,6 +216,62 @@ function crearLineaPedido($pedido_id, $producto_id, $cantidad, $precioUnitario) 
     if (!$stmt->execute()) {
         die("Error al crear la línea de pedido: " . $stmt->error);
     }
+}
+
+function actualizarStock($producto_id, $cantidad_vendida) {
+    global $conn;
+    $stmt = $conn->prepare("UPDATE Productos SET stock = stock - ? WHERE id = ?");
+    $stmt->bind_param("ii", $cantidad_vendida, $producto_id);
+    $stmt->execute();
+}
+
+function verificarStock($producto_id, $cantidad_requerida) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT stock FROM Productos WHERE id = ?");
+    $stmt->bind_param("i", $producto_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $producto = $result->fetch_assoc();
+    return $producto['stock'] >= $cantidad_requerida;
+}
+
+function guardarEnCarrito($usuario_id, $producto_id, $cantidad) {
+    global $conn;
+
+    // Verificar si el producto ya está en el carrito
+    $stmt = $conn->prepare("SELECT cantidad FROM Carrito WHERE usuario_id = ? AND producto_id = ?");
+    $stmt->bind_param("ii", $usuario_id, $producto_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    if ($result->num_rows > 0) {
+        // Actualizar la cantidad del producto en el carrito
+        $stmt = $conn->prepare("UPDATE Carrito SET cantidad = cantidad + ? WHERE usuario_id = ? AND producto_id = ?");
+        $stmt->bind_param("iii", $cantidad, $usuario_id, $producto_id);
+        $stmt->execute();
+        $stmt->close();
+    } else {
+        // Insertar el producto en el carrito
+        $stmt = $conn->prepare("INSERT INTO Carrito (usuario_id, producto_id, cantidad) VALUES (?, ?, ?)");
+        $stmt->bind_param("iii", $usuario_id, $producto_id, $cantidad);
+        $stmt->execute();
+        $stmt->close();
+    }
+}
+
+function eliminarDelCarrito($usuario_id, $producto_id) {
+    global $conn;
+    $stmt = $conn->prepare("DELETE FROM carrito WHERE usuario_id = ? AND producto_id = ?");
+    $stmt->bind_param("ii", $usuario_id, $producto_id);
+    $stmt->execute();
+}
+
+function actualizarCantidadCarrito($usuario_id, $producto_id, $cantidad) {
+    global $conn;
+    $stmt = $conn->prepare("UPDATE carrito SET cantidad = ? WHERE usuario_id = ? AND producto_id = ?");
+    $stmt->bind_param("iii", $cantidad, $usuario_id, $producto_id);
+    $stmt->execute();
 }
 
 ?>

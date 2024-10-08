@@ -1,5 +1,6 @@
 <?php
 include '../config/db_functions.php';
+include '../includes/header.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = $_POST['nombre'];
@@ -32,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Error al subir el producto.";
     }
 }
+
+$categorias = obtenerCategorias();
 ?>
 
 <!DOCTYPE html>
@@ -70,9 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label for="categoria">Categoría:</label><br>
         <select name="categoria_id" required>
             <?php
-            // Obtener las categorías de la base de datos
-            include '../config/db_functions.php';
-            $categorias = obtenerCategorias();
             foreach ($categorias as $categoria) {
                 echo "<option value='{$categoria['id']}'>{$categoria['nombre_categoria']}</option>";
             }

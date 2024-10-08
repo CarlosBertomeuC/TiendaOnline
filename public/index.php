@@ -32,9 +32,9 @@ $categorias = obtenerCategorias();
             <?php if (!empty($productos)): ?>
                 <?php foreach ($productos as $producto): ?>
                     <div class="producto">
-                        <img src="../uploads/productos/<?php echo $producto['imagen']; ?>" alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
+                        <img src="../<?php echo $producto['imagen']; ?>" alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
                         <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
-                        <p>€<?php echo number_format($producto['precioUnitario'], 2); ?></p>
+                        <p><?php echo number_format($producto['precioUnitario'], 2); ?>€</p>
                         <a href="detalle_producto.php?id=<?php echo $producto['id']; ?>">Ver detalles</a>
                     </div>
                 <?php endforeach; ?>
