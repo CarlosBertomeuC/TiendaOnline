@@ -4,7 +4,7 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
-    $password = $_POST['contraseña'];
+    $password = $_POST['password'];
 
     $usuario = obtenerUsuarioPorEmail($email);
     if ($usuario) {
@@ -44,23 +44,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="../assets/css/login.css">
 </head>
 <body>
-    <h1>Inicio de Sesión</h1>
-    <form action="" method="POST">
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br>
-        <label>Contraseña:</label><br>
-        <input type="password" name="contraseña" required><br>
-        <button type="submit">Iniciar Sesión</button>
-        <button type="button" onclick="location.href='registro.php'">Registrarse</button>
-    </form>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form action="" method="post">
+            <input type="text" name="email" placeholder="Correo Electrónico" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Ingresar</button>
+        </form>
+        <a class="register-link" href="registro.php">¿No tienes una cuenta? Regístrate</a>
+    </div>
 </body>
 </html>

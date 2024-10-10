@@ -1,6 +1,5 @@
 <?php
 session_start();
-include '../includes/header.php';
 include '../config/db_functions.php';
 
 // Verificar si el usuario está logueado
@@ -33,40 +32,49 @@ if (isset($_POST['actualizar'])) {
     exit;
 }
 ?>
-<h2>Carrito de Compras</h2>
-
-<form method="post">
-    <table>
-        <tr>
-            <th>Producto</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
-            <th>Subtotal</th>
-        </tr>
-        <?php
-        $total = 0;
-        foreach ($carrito as $producto) {
-            $precio = floatval($producto['precio']);
-            $cantidad = intval($producto['cantidad']);
-            $subtotal = $precio * $cantidad;
-            $total += $subtotal;
-            echo "<tr>";
-            echo "<td>{$producto['nombre']}</td>";
-            echo "<td>\${$precio}</td>";
-            echo "<td><input type='number' name='cantidad[{$producto['id']}]' value='{$cantidad}' min='0'></td>";
-            echo "<td>\${$subtotal}</td>";
-            echo "</tr>";
-        }
-        ?>
-        <tr>
-            <td colspan="3">Total</td>
-            <td><?php echo "\${$total}"; ?></td>
-        </tr>
-    </table>
-    <button type="submit" name="actualizar">Actualizar Carrito</button>
-</form>
-<a href="checkout.php">Proceder al Pago</a>
-
-<?php
-include '../includes/footer.php';
-?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="../assets/css/carrito.css">
+</head>
+<body>
+    <?php include '../includes/header.php'; ?>
+    <div class="container">
+        <h2>Carrito de Compras</h2>
+        <form method="post">
+            <table>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+                <?php
+                $total = 0;
+                foreach ($carrito as $producto) {
+                    $precio = floatval($producto['precio']);
+                    $cantidad = intval($producto['cantidad']);
+                    $subtotal = $precio * $cantidad;
+                    $total += $subtotal;
+                    echo "<tr>";
+                    echo "<td>{$producto['nombre']}</td>";
+                    echo "<td>\${$precio}</td>";
+                    echo "<td><input type='number' name='cantidad[{$producto['id']}]' value='{$cantidad}' min='0'></td>";
+                    echo "<td>\${$subtotal}</td>";
+                    echo "</tr>";
+                }
+                ?>
+                <tr>
+                    <td colspan="3">Total</td>
+                    <td><?php echo "\${$total}"; ?></td>
+                </tr>
+            </table>
+            <button type="submit" name="actualizar">Actualizar Carrito</button>
+        </form>
+        <a class="pagar" href="checkout.php">Proceder al Pago</a>
+    </div>
+</body>
+</html>

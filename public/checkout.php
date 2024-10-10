@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include '../includes/header.php';
 include '../config/db_functions.php';
 
 // Comprobaciones varias
@@ -28,23 +28,49 @@ foreach ($carrito as $producto) {
 }
 
 // Mostrar los productos del carrito
-echo "<h1>Tu Carrito</h1>";
-echo "<table border='1'>";
-echo "<tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Total</th></tr>";
-foreach ($carrito as $producto) {
-    $precio = floatval($producto['precio']);
-    $cantidad = intval($producto['cantidad']);
-    $totalProducto = $precio * $cantidad;
-    echo "<tr>";
-    echo "<td>{$producto['nombre']}</td>";
-    echo "<td>\${$precio}</td>";
-    echo "<td>{$cantidad}</td>";
-    echo "<td>\${$totalProducto}</td>";
-    echo "</tr>";
-}
-echo "<tr><td colspan='3'>Total</td><td>\${$total}</td></tr>";
-echo "</table>";
+?>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="../assets/css/checkout.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tu Carrito</h1>
+        <table>
+            <tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Total</th></tr>
+            <?php foreach ($carrito as $producto): ?>
+                <?php
+                $precio = floatval($producto['precio']);
+                $cantidad = intval($producto['cantidad']);
+                $totalProducto = $precio * $cantidad;
+                ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
+                    <td><?php echo htmlspecialchars($precio); ?></td>
+                    <td><?php echo htmlspecialchars($cantidad); ?></td>
+                    <td><?php echo htmlspecialchars($totalProducto); ?></td>
+                </tr>
+            <?php endforeach; ?>
+            <tr><td colspan="3">Total</td><td><?php echo htmlspecialchars($total); ?></td></tr>
+        </table>
+
+        <!-- Formulario de checkout -->
+        <h2>Dirección de Envío</h2>
+        <form method="POST" action="">
+            <label for="direccion_envio">Dirección de Envío:</label>
+            <input type="text" id="direccion_envio" name="direccion_envio" required>
+            <button type="submit">Realizar Pedido</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<?php
 // Procesar el formulario de checkout
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $direccion_envio = $_POST['direccion_envio'];
@@ -71,12 +97,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
 }
 ?>
-
-<!-- Formulario de checkout -->
-<h2>Dirección de Envío</h2>
-<form method="POST" action="">
-    <label for="direccion_envio">Dirección de Envío:</label>
-    <input type="text" id="direccion_envio" name="direccion_envio" required>
-    <br>
-    <button type="submit">Realizar Pedido</button>
-</form>

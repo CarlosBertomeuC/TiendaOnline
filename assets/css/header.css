@@ -1,0 +1,53 @@
+/* Encabezado */
+header {
+    text-align: center;
+    padding: 20px 0;
+    margin: 0;
+    background-color: #554f47;
+    color: #FFFFFF;
+    font-size: x-large;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Barra de navegación */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: #FFFFFF;
+}
+
+.navbar .logo h1 a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar .nav-links li {
+    margin-left: 20px;
+}
+
+.navbar .nav-links a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar .nav-links a:hover {
+    color:darkgoldenrod;
+}
+.logo{
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+}

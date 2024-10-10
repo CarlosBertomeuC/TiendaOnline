@@ -274,4 +274,16 @@ function actualizarCantidadCarrito($usuario_id, $producto_id, $cantidad) {
     $stmt->execute();
 }
 
+function obtenerProductosRecientes($limite = 5) {
+    global $conn;
+    $sql = "SELECT * FROM productos ORDER BY id DESC LIMIT ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $limite);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $productos = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+    return $productos;
+}
+
 ?>

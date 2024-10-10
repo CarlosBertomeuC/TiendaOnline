@@ -1,35 +1,39 @@
 <?php
-include '../config/db_functions.php';
 session_start();
+include '../config/db_functions.php';
+
+$error = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = trim($_POST['nombre']);
     $apellidos = trim($_POST['apellidos']);
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $contraseña = $_POST['contraseña'];
+    $email = trim($_POST['email']);
+    $contraseña = trim($_POST['contraseña']);
     $telefono = trim($_POST['telefono']);
-    $error = [];
 
-    // Validar que no estén vacíos
-    if (empty($nombre) || empty($apellidos) || empty($email) || empty($contraseña) || empty($telefono)) {
-        $error[] = "Todos los campos son obligatorios.";
+    // Validaciones
+    if (empty($nombre)) {
+        $error[] = "El nombre es obligatorio.";
+    }
+    if (empty($apellidos)) {
+        $error[] = "Los apellidos son obligatorios.";
+    }
+    if (empty($email)) {
+        $error[] = "El email es obligatorio.";
+    }
+    if (empty($contraseña)) {
+        $error[] = "La contraseña es obligatoria.";
+    }
+    if (empty($telefono)) {
+        $error[] = "El teléfono es obligatorio.";
     }
 
-    // Validar el formato del email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error[] = "Formato de email no válido.";
-    }
-
-    // Validar la longitud de la contraseña (mínimo 8 caracteres)
-    if (strlen($contraseña) < 8) {
-        $error[] = "La contraseña debe tener al menos 8 caracteres.";
-    }
-
-    // Si no hay errores, procesamos el registro
+    // Si no hay errores, registrar el usuario
     if (empty($error)) {
         registrarUsuario($nombre, $apellidos, $email, $contraseña, 'cliente', $telefono);
         echo "Registro exitoso.";
         header('Location: login.php');
+        exit();
     } else {
         // Mostrar errores
         foreach ($error as $err) {
@@ -39,28 +43,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
+    <link rel="stylesheet" href="../assets/css/login.css">
 </head>
 <body>
-    <h1>Registro de Usuarios</h1>
-    <form action="" method="POST">
-        <label>Nombre:</label><br>
-        <input type="text" name="nombre" required><br>
-        <label>Apellidos:</label><br>
-        <input type="text" name="apellidos" required><br>
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br>
-        <label>Contraseña:</label><br>
-        <input type="password" name="contraseña" required><br>
-        <label>Teléfono:</label><br>
-        <input type="text" name="telefono"><br>
-        <button type="submit">Registrarse</button>
-    </form>
+    <div class="login-container">
+        <h2>Registro de Usuarios</h2>
+        <form action="" method="POST">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos" name="apellidos" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="contraseña">Contraseña:</label>
+            <input type="password" id="contraseña" name="contraseña" required>
+            
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" name="telefono" required>
+            
+            <button type="submit">Registrar</button>
+        </form>
+        <a class="register-link" href="login.php">¿Ya tienes una cuenta? Inicia sesión</a>
+    </div>
 </body>
 </html>

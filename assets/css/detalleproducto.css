@@ -1,0 +1,82 @@
+/* Definición de variables CSS */
+:root {
+    --color-primario: #554f47;
+    --color-secundario: #817564;
+    --color-terciario: #ad9c84;
+}
+
+/* Estilos generales */
+body {
+    background-color: var(--color-secundario);
+    color: var(--color-primario);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.container {
+    width: 80%;
+    max-width: 800px;
+    margin: 100px auto 20px; /* Ajustar el margen superior para evitar que el contenido se superponga con el header */
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid var(--color-primario);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Estilos para el título del producto */
+.product-title {
+    font-size: 2em;
+    color: var(--color-primario);
+    margin-bottom: 10px;
+}
+
+/* Estilos para la descripción del producto */
+.product-description {
+    font-size: 1.2em;
+    color: var(--color-primario);
+    margin-bottom: 20px;
+}
+
+/* Estilos para el precio del producto */
+.product-price {
+    font-size: 1.5em;
+    color: var(--color-primario);
+    margin-bottom: 20px;
+}
+
+/* Estilos para el botón de añadir al carrito */
+.add-to-cart {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-primario);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background-color: var(--color-secundario);
+}
+
+/* Estilos para la imagen del producto */
+.product-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los detalles del producto */
+.product-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: var(--color-terciario);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}

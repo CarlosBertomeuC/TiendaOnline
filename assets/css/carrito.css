@@ -1,0 +1,82 @@
+/* Definición de variables CSS */
+:root {
+    --color-primario: #554f47;
+    --color-secundario: #817564;
+    --color-terciario: #ad9c84;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-secundario);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.container {
+    width: 80%;
+    max-width: 800px;
+    margin: 100px auto 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid var(--color-primario);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Estilos para la tabla del carrito */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 1px solid var(--color-primario);
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: var(--color-primario);
+    color: #FFFFFF;
+}
+
+table td {
+    background-color: var(--color-terciario);
+}
+
+table tr:nth-child(even) td {
+    background-color: var(--color-secundario);
+}
+
+/* Estilos para el botón de actualizar carrito */
+button[type="submit"] {
+    background-color: var(--color-primario);
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color-secundario);
+}
+
+.pagar {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--color-primario);
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pagar:hover {
+    background-color: var(--color-secundario);
+}

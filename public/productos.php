@@ -5,7 +5,6 @@ include '../config/db_functions.php';
 $categoria_id = isset($_GET['categoria']) ? $_GET['categoria'] : null;
 $productos = obtenerProductosPorCategoria($categoria_id);
 $categorias = obtenerCategorias();
-$productosRecientes = obtenerProductosRecientes();
 ?>
 
 <!DOCTYPE html>
@@ -19,17 +18,23 @@ $productosRecientes = obtenerProductosRecientes();
 <body>
     <?php include '../includes/header.php'; ?>
 
-    <!-- Banner promocional -->
-    <div class="banner">
-        <img src="../uploads/extra/baner.png" alt="Promociones">
-    </div>
+    <!-- Explorar por categorías -->
+    <section class="categorias">
+        <h2>Explora por Categorías</h2>
+        <div class="categorias-lista">
+            <a href="productos.php" class="boton-todas-categorias">Todas las categorías</a>
+            <?php foreach ($categorias as $categoria): ?>
+                <a href="productos.php?categoria=<?php echo $categoria['id']; ?>"><?php echo htmlspecialchars($categoria['nombre_categoria']); ?></a>
+            <?php endforeach; ?>
+        </div>
+    </section>
 
-    <!-- Ofertas especiales -->
-    <section class="ofertas-especiales">
-        <h2>Ofertas Especiales</h2>
+    <!-- Productos por categoría -->
+    <section class="productos-categoria">
+        <h2>Todos los productos</h2>
         <div class="productos">
-            <?php if (!empty($productosRecientes)): ?>
-                <?php foreach ($productosRecientes as $producto): ?>
+            <?php if (!empty($productos)): ?>
+                <?php foreach ($productos as $producto): ?>
                     <div class="producto">
                         <img src="../<?php echo $producto['imagen']; ?>" alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
                         <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
