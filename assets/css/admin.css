@@ -1,0 +1,66 @@
+/* Definición de variables CSS */
+:root {
+    --color-primario: #554f47;
+    --color-secundario: #817564;
+    --color-terciario: #ad9c84;
+    --color-fondo: #f4f4f4;
+    --color-texto: #333333;
+    --color-boton: #554f47;
+    --color-boton-hover: #817564;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor principal */
+.container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+}
+
+/* Estilos para el encabezado */
+h1 {
+    color: var(--color-primario);
+    margin-bottom: 20px;
+}
+
+/* Estilos para los párrafos */
+p {
+    color: var(--color-texto);
+    margin-bottom: 10px;
+}
+
+/* Estilos para los botones */
+button {
+    background-color: var(--color-boton);
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: background-color 0.3s ease;
+}
+
+button a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: var(--color-boton-hover);
+}

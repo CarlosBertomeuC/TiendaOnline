@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../includes/header.php';
 include '../config/db_functions.php';
 
 // Verificar si el usuario está logueado
@@ -12,12 +13,6 @@ $usuario_id = $_SESSION['usuario_id'];
 
 // Obtener los productos del carrito desde la base de datos
 $carrito = obtenerCarrito($usuario_id);
-
-// Verificar si el carrito está vacío
-if (empty($carrito)) {
-    echo "Tu carrito está vacío. <a href='index.php'>Volver a la tienda</a>";
-    exit;
-}
 
 // Actualizar cantidades o eliminar productos del carrito
 if (isset($_POST['actualizar'])) {
@@ -41,7 +36,16 @@ if (isset($_POST['actualizar'])) {
     <link rel="stylesheet" href="../assets/css/carrito.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+<?php
+    // Verificar si el carrito está vacío
+    if (empty($carrito)) {
+        echo "<div class='carrito-vacio'>
+                <p>Tu carrito está vacío.</p>
+                <a href='index.php' class='boton-volver'>Volver a la tienda</a>
+              </div>";
+        exit;
+    }
+    ?>
     <div class="container">
         <h2>Carrito de Compras</h2>
         <form method="post">

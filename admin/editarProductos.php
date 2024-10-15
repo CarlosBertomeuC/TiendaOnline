@@ -1,28 +1,28 @@
 <?php
-include '../config/db_functions.php';
 session_start();
+include '../config/db_functions.php';
 
 if ($_SESSION['rol'] != 'administrador') {
     header('Location: ../public/login.php');
     exit();
 }
 
-$id = $_GET['id'];
-$producto = obtenerProductoPorId($id);
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_GET['id']; // Asegúrate de que el ID del producto se pase correctamente
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
     $precioUnitario = $_POST['precioUnitario'];
     $estado = $_POST['estado'];
     $stock = $_POST['stock'];
 
-    if (actualizarProducto($id, $nombre, $descripcion, $precioUnitario, $estado, $stock)) {
-        header('Location: listarProductos.php');
-    } else {
-        echo "Error al actualizar el producto.";
-    }
+    actualizarProducto($id, $nombre, $descripcion, $precioUnitario, $estado, $stock);
+    header('Location: listarProductos.php'); // Redirigir a la página de productos después de la actualización
+    exit();
 }
+
+// Obtener los datos del producto para mostrarlos en el formulario
+$id = $_GET['id'];
+$producto = obtenerProductoPorId($id);
 ?>
 
 <!DOCTYPE html>
@@ -36,13 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h1>Editar Producto</h1>
     <form action="" method="post">
         <label>Nombre del producto:</label><br>
-        <input type="text" name="nombre" value="<?php echo $producto['nombre']; ?>" required><br>
+        <input type="text" name="nombre" value="<?php echo htmlspecialchars($producto['nombre']); ?>" required><br>
 
         <label>Descripción:</label><br>
-        <textarea name="descripcion" required><?php echo $producto['descripcion']; ?></textarea><br>
+        <textarea name="descripcion" required><?php echo htmlspecialchars($producto['descripcion']); ?></textarea><br>
 
         <label>Precio Unitario:</label><br>
-        <input type="number" step="0.01" name="precioUnitario" value="<?php echo $producto['precioUnitario']; ?>" required><br>
+        <input type="number" step="0.01" name="precioUnitario" value="<?php echo htmlspecialchars($producto['precioUnitario']); ?>" required><br>
 
         <label>Estado:</label><br>
         <select name="estado" required>
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </select><br>
 
         <label>Stock:</label><br>
-        <input type="number" name="stock" value="<?php echo $producto['stock']; ?>" required><br>
+        <input type="number" name="stock" value="<?php echo htmlspecialchars($producto['stock']); ?>" required><br>
 
         <button type="submit">Actualizar Producto</button>
     </form>

@@ -1,5 +1,6 @@
 <?php
 include '../config/db_functions.php';
+include '../includes/header.php';
 session_start();
 
 if ($_SESSION['rol'] != 'administrador') {
@@ -25,6 +26,7 @@ $productos = obtenerProductos();
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Estado</th>
                 <th>Descripción</th>
                 <th>Precio</th>
                 <th>Stock</th>
@@ -36,6 +38,7 @@ $productos = obtenerProductos();
             <tr>
                 <td><?php echo $producto['id']; ?></td>
                 <td><?php echo $producto['nombre']; ?></td>
+                <td><?php echo $producto['estado']; ?></td>
                 <td><?php echo $producto['descripcion']; ?></td>
                 <td><?php echo $producto['precioUnitario']; ?> €</td>
                 <td><?php echo $producto['stock']; ?></td>

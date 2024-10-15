@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         eliminarDelCarrito($usuario_id, $producto['id']);
     }
 
-    echo "Pedido realizado con éxito. <a href='index.php'>Volver a la tienda</a>";
+    header('Location: pedidorealizado.php');
     exit();
 }
 ?>

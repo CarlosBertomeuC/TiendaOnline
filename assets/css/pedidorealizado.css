@@ -1,0 +1,47 @@
+/* Definición de variables CSS */
+:root {
+    --color-primario: #554f47;
+    --color-secundario: #817564;
+    --color-terciario: #ad9c84;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-secundario);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+/* Estilos para el título */
+h1 {
+    color: var(--color-primario);
+    margin-bottom: 20px;
+}
+
+/* Estilos para el botón de volver */
+.boton-volver {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-primario);
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.boton-volver:hover {
+    background-color: var(--color-secundario);
+}

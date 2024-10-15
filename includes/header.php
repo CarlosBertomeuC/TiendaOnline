@@ -4,10 +4,10 @@
         <img class="logo" src="../assets/images/logo.png" alt="Logo de la tienda">
         <ul class="nav-links">
             <li><a href="index.php">Inicio</a></li>
-            <li><a href="productos.php">Tienda</a></li>
             
             <?php
                 if (isset($_SESSION['rol']) && $_SESSION['rol'] != 'administrador') { ?>
+                    <li><a href="productos.php">Tienda</a></li>
                     <li><a href="carrito.php">Carrito</a></li>
                 <?php }?>
             <?php if (isset($_SESSION['usuario_id'])): ?>

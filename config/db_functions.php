@@ -65,14 +65,14 @@ function obtenerProductoPorId($producto_id) {
 // Función para actualizar un producto
 function actualizarProducto($id, $nombre, $descripcion, $precioUnitario, $estado, $stock) {
     global $conn;
-
-    $stmt = $conn->prepare("UPDATE Productos SET nombre = ?, descripcion = ?, precioUnitario = ?, estado = ?, stock = ? WHERE id = ?");
-    if ($stmt) {
-        $stmt->bind_param("ssdsi", $nombre, $descripcion, $precioUnitario, $estado, $stock);
-        return $stmt->execute();
-    } else {
-        return false;
+    $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precioUnitario = ?, estado = ?, stock = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        die('Error en la preparación de la declaración: ' . $conn->error);
     }
+    $stmt->bind_param("ssdssi", $nombre, $descripcion, $precioUnitario, $estado, $stock, $id);
+    $stmt->execute();
+    $stmt->close();
 }
 
 // Función para eliminar un producto
@@ -286,4 +286,15 @@ function obtenerProductosRecientes($limite = 5) {
     return $productos;
 }
 
+function usuarioExiste($email) {
+    global $conn;
+    $sql = "SELECT id FROM usuarios WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+    $existe = $stmt->num_rows > 0;
+    $stmt->close();
+    return $existe;
+}
 ?>

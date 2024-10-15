@@ -80,3 +80,39 @@ button[type="submit"]:hover {
 .pagar:hover {
     background-color: var(--color-secundario);
 }
+
+/* Contenedor del mensaje de carrito vacío */
+.carrito-vacio {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+
+/* Estilos para el mensaje */
+.carrito-vacio p {
+    color: var(--color-primario);
+    margin-bottom: 20px;
+}
+
+/* Estilos para el botón de volver */
+.boton-volver {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-primario);
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.boton-volver:hover {
+    background-color: var(--color-secundario);
+}
