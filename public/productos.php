@@ -1,9 +1,13 @@
 <?php
 session_start();
 include '../config/db_functions.php';
+include '../includes/header.php';
 
 $categoria_id = isset($_GET['categoria']) ? $_GET['categoria'] : null;
-$productos = obtenerProductosPorCategoria($categoria_id);
+$precio_min = isset($_GET['precio_min']) ? $_GET['precio_min'] : 0;
+$precio_max = isset($_GET['precio_max']) ? $_GET['precio_max'] : 1000;
+
+$productos = obtenerProductosPorCategoriaYPrecio($categoria_id, $precio_min, $precio_max);
 $categorias = obtenerCategorias();
 ?>
 
@@ -11,24 +15,38 @@ $categorias = obtenerCategorias();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda de Videojuegos</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <title>Productos</title>
+    <link rel="stylesheet" href="../assets/css/productos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <section class="filtros">
+        <h2>Filtros</h2>
+        <a href="productos.php">Limpiar Filtros</a>
+        <!-- Explorar por categorías -->
+        <section class="categorias">
+            <h2>Explora por Categorías</h2>
+            <div class="categorias-lista">
+                <select id="categoria-select">
+                    <option value="">Todas las categorías</option>
+                    <?php foreach ($categorias as $categoria): ?>
+                        <option value="<?php echo $categoria['id']; ?>"><?php echo htmlspecialchars($categoria['nombre_categoria']); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </section>
 
-    <!-- Explorar por categorías -->
-    <section class="categorias">
-        <h2>Explora por Categorías</h2>
-        <div class="categorias-lista">
-            <a href="productos.php" class="boton-todas-categorias">Todas las categorías</a>
-            <?php foreach ($categorias as $categoria): ?>
-                <a href="productos.php?categoria=<?php echo $categoria['id']; ?>"><?php echo htmlspecialchars($categoria['nombre_categoria']); ?></a>
-            <?php endforeach; ?>
-        </div>
+        <!-- Explorar por precio -->
+        <section class="precio">
+            <h2>Filtrar por Precio</h2>
+            <div class="filtro-precio">
+                <div id="rango-precio" data-min="<?php echo $precio_min; ?>" data-max="<?php echo $precio_max; ?>"></div>
+                <p>Rango de precio: <span id="rango-precio-valor"><?php echo $precio_min; ?> - <?php echo $precio_max; ?></span>€</p>
+            </div>
+        </section>
+
+        <button id="aplicar-filtros">Aplicar Filtros</button>
     </section>
-
     <!-- Productos por categoría -->
     <section class="productos-categoria">
         <h2>Todos los productos</h2>
@@ -47,5 +65,8 @@ $categorias = obtenerCategorias();
             <?php endif; ?>
         </div>
     </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
+    <script src="../assets/js/precio.js"></script>
 </body>
 </html>

@@ -7,6 +7,10 @@
     --color-texto: #333333;
     --color-boton: #554f47;
     --color-boton-hover: #817564;
+    --color-tabla-header: #554f47;
+    --color-tabla-header-texto: #ffffff;
+    --color-tabla-fila: #ffffff;
+    --color-tabla-fila-hover: #f1f1f1;
 }
 
 /* Estilos generales */
@@ -16,21 +20,21 @@ body {
     color: var(--color-texto);
     margin: 0;
     padding: 0;
-    height: 100vh;
+    padding: 20px;
 }
 
 /* Contenedor principal */
 .container {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 1200px;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 400px;
 }
 
 /* Estilos para el encabezado */
@@ -39,14 +43,46 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Estilos para los párrafos */
-p {
-    color: var(--color-texto);
-    margin-bottom: 10px;
+/* Estilos para los enlaces */
+a {
+    color: var(--color-primario);
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 1px solid var(--color-primario);
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: var(--color-tabla-header);
+    color: var(--color-tabla-header-texto);
+}
+
+table tr:nth-child(even) {
+    background-color: var(--color-tabla-fila);
+}
+
+table tr:hover {
+    background-color: var(--color-tabla-fila-hover);
 }
 
 /* Estilos para los botones */
-button {
+a {
     background-color: var(--color-boton);
     color: #FFFFFF;
     padding: 10px 20px;
@@ -57,11 +93,13 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button a {
-    color: #FFFFFF;
-    text-decoration: none;
-}
 
 button:hover {
     background-color: var(--color-boton-hover);
+}
+
+.acciones {
+    display: flex;
+    justify-content: space-around;
+
 }

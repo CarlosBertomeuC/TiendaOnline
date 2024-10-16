@@ -1,6 +1,6 @@
 <?php
-include '../config/db_functions.php';
 session_start();
+include '../config/db_functions.php';
 
 if ($_SESSION['rol'] != 'administrador') {
     header('Location: ../public/login.php');
@@ -24,13 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Categoría</title>
+    <link rel="stylesheet" href="../assets/css/listarproductos.css">
 </head>
 <body>
-    <h1>Agregar Nueva Categoría</h1>
-    <form action="" method="post">
-        <label>Nombre de la categoría:</label><br>
-        <input type="text" name="nombre_categoria" required><br>
-        <button type="submit">Agregar Categoría</button>
-    </form>
+    <div class="container">
+        <h1>Agregar Nueva Categoría</h1>
+        <form action="" method="post">
+            <label>Nombre de la categoría:</label><br>
+            <input type="text" name="nombre_categoria" required><br>
+            <button type="submit">Agregar Categoría</button>
+        </form>
+    </div>
 </body>
 </html>

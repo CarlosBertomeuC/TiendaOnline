@@ -31,29 +31,32 @@ $producto = obtenerProductoPorId($id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Producto</title>
+    <link rel="stylesheet" href="../assets/css/listarproductos.css">
 </head>
 <body>
-    <h1>Editar Producto</h1>
-    <form action="" method="post">
-        <label>Nombre del producto:</label><br>
-        <input type="text" name="nombre" value="<?php echo htmlspecialchars($producto['nombre']); ?>" required><br>
+    <div class="container">
+        <h1>Editar Producto</h1>
+        <form action="" method="post">
+            <label>Nombre del producto:</label><br>
+            <input type="text" name="nombre" value="<?php echo htmlspecialchars($producto['nombre']); ?>" required><br>
 
-        <label>Descripción:</label><br>
-        <textarea name="descripcion" required><?php echo htmlspecialchars($producto['descripcion']); ?></textarea><br>
+            <label>Descripción:</label><br>
+            <textarea name="descripcion" required><?php echo htmlspecialchars($producto['descripcion']); ?></textarea><br>
 
-        <label>Precio Unitario:</label><br>
-        <input type="number" step="0.01" name="precioUnitario" value="<?php echo htmlspecialchars($producto['precioUnitario']); ?>" required><br>
+            <label>Precio Unitario:</label><br>
+            <input type="number" step="0.01" name="precioUnitario" value="<?php echo htmlspecialchars($producto['precioUnitario']); ?>" required><br>
 
-        <label>Estado:</label><br>
-        <select name="estado" required>
-            <option value="nuevo" <?php if ($producto['estado'] == 'nuevo') echo 'selected'; ?>>Nuevo</option>
-            <option value="usado" <?php if ($producto['estado'] == 'usado') echo 'selected'; ?>>Usado</option>
-        </select><br>
+            <label>Estado:</label><br>
+            <select name="estado" required>
+                <option value="nuevo" <?php if ($producto['estado'] == 'nuevo') echo 'selected'; ?>>Nuevo</option>
+                <option value="usado" <?php if ($producto['estado'] == 'usado') echo 'selected'; ?>>Usado</option>
+            </select><br>
 
-        <label>Stock:</label><br>
-        <input type="number" name="stock" value="<?php echo htmlspecialchars($producto['stock']); ?>" required><br>
+            <label>Stock:</label><br>
+            <input type="number" name="stock" value="<?php echo htmlspecialchars($producto['stock']); ?>" required><br>
 
-        <button type="submit">Actualizar Producto</button>
-    </form>
+            <button type="submit">Actualizar Producto</button>
+        </form>
+    </div>
 </body>
 </html>

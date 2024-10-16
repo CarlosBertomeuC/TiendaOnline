@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../config/db_functions.php';
 include '../includes/header.php';
 
@@ -48,41 +49,44 @@ $categorias = obtenerCategorias();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Producto</title>
+    <link rel="stylesheet" href="../assets/css/listarproductos.css">
 </head>
 <body>
-    <h1>Agregar Nuevo Producto</h1>
-    <form action="" method="post" enctype="multipart/form-data">
-        <label>Nombre del producto:</label><br>
-        <input type="text" name="nombre" required><br>
+    <div class="container">
+        <h1>Agregar Nuevo Producto</h1>
+        <form action="" method="post" enctype="multipart/form-data">
+            <label>Nombre del producto:</label><br>
+            <input type="text" name="nombre" required><br>
 
-        <label>Descripción:</label><br>
-        <textarea name="descripcion" required></textarea><br>
+            <label>Descripción:</label><br>
+            <textarea name="descripcion" required></textarea><br>
 
-        <label>Precio Unitario:</label><br>
-        <input type="number" step="0.01" name="precioUnitario" required><br>
+            <label>Precio Unitario:</label><br>
+            <input type="number" step="0.01" name="precioUnitario" required><br>
 
-        <label>Estado:</label><br>
-        <select name="estado" required>
-            <option value="nuevo">Nuevo</option>
-            <option value="usado">Usado</option>
-        </select><br>
+            <label>Estado:</label><br>
+            <select name="estado" required>
+                <option value="nuevo">Nuevo</option>
+                <option value="usado">Usado</option>
+            </select><br>
 
-        <label>Stock:</label><br>
-        <input type="number" name="stock" required><br>
+            <label>Stock:</label><br>
+            <input type="number" name="stock" required><br>
 
-        <label for="categoria">Categoría:</label><br>
-        <select name="categoria_id" required>
-            <?php
-            foreach ($categorias as $categoria) {
-                echo "<option value='{$categoria['id']}'>{$categoria['nombre_categoria']}</option>";
-            }
-            ?>
-        </select><br>
+            <label for="categoria">Categoría:</label><br>
+            <select name="categoria_id" required>
+                <?php
+                foreach ($categorias as $categoria) {
+                    echo "<option value='{$categoria['id']}'>{$categoria['nombre_categoria']}</option>";
+                }
+                ?>
+            </select><br>
 
-        <label for="imagen">Imagen del Producto:</label>
-        <input type="file" id="imagen" name="imagen" required><br>
+            <label for="imagen">Imagen del Producto:</label>
+            <input type="file" id="imagen" name="imagen" required><br>
 
-        <button type="submit">Agregar Producto</button>
-    </form>
+            <button type="submit">Agregar Producto</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -11,10 +11,6 @@ if ($_SESSION['rol'] !== 'administrador') {
     header("Location: ../public/login.php");
     exit();
 }
-
-echo "<h1>Bienvenido al Panel de Administración</h1>";
-echo "<p>Usuario: " . $_SESSION['nombre'] . "</p>";
-echo "<p>Rol: " . $_SESSION['rol'] . "</p>";
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +23,7 @@ echo "<p>Rol: " . $_SESSION['rol'] . "</p>";
 <body>
     <div class="container">
         <?php
-        echo "<h1>Bienvenido al Panel de Administración</h1>";
+        echo "<h1>Panel de Administración</h1>";
         echo "<p>Usuario: " . $_SESSION['nombre'] . "</p>";
         echo "<p>Rol: " . $_SESSION['rol'] . "</p>";
         ?>

@@ -1,0 +1,250 @@
+/* Definición de variables CSS */
+:root {
+    --color-primario: #554f47;
+    --color-secundario: #817564;
+    --color-terciario: #ad9c84;
+    --color-fondo: #f4f4f4;
+    --color-texto: #333333;
+    --color-boton: #554f47;
+    --color-boton-hover: #817564;
+    --color-tabla-header: #554f47;
+    --color-tabla-header-texto: #ffffff;
+    --color-tabla-fila: #ffffff;
+    --color-tabla-fila-hover: #f1f1f1;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-terciario);
+}
+
+/* Contenedor principal */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el encabezado */
+h1 {
+    color: var(--color-primario);
+    margin-bottom: 20px;
+}
+
+/* Estilos para los enlaces */
+a {
+    color: var(--color-primario);
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 1px solid var(--color-primario);
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: var(--color-tabla-header);
+    color: var(--color-tabla-header-texto);
+}
+
+table tr:nth-child(even) {
+    background-color: var(--color-tabla-fila);
+}
+
+table tr:hover {
+    background-color: var(--color-tabla-fila-hover);
+}
+
+/* Estilos para los botones */
+button {
+    background-color: var(--color-boton);
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: background-color 0.3s ease;
+    font-size: larger;
+}
+
+button a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: var(--color-boton-hover);
+}
+
+/* Estilos para la sección de filtros */
+.filtros {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.filtros h2 {
+    color: var(--color-primario);
+    margin-bottom: 20px;
+}
+
+.filtros a {
+    color: var(--color-fondo);
+    text-decoration: none;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    display: inline-block;
+    background-color: var(--color-primario);
+}
+
+.filtros a:hover {
+    text-decoration: underline;
+}
+/* Estilos para el filtro de categorías */
+.categorias {
+    margin-bottom: 20px;
+}
+
+.categorias h2 {
+    color: var(--color-primario);
+    margin-bottom: 10px;
+}
+
+.categorias-lista {
+    display: flex;
+    flex-direction: column;
+}
+
+.categorias-lista select {
+    padding: 10px;
+    border: 1px solid var(--color-primario);
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilos para el filtro de precio */
+.precio {
+    margin-bottom: 20px;
+}
+
+.precio h2 {
+    color: var(--color-primario);
+    margin-bottom: 40px;
+}
+
+.filtro-precio {
+    text-align: center;
+}
+
+#rango-precio {
+    margin: 20px 0;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#rango-precio .noUi-handle {
+    background-color: var(--color-primario);
+    border: none;
+}
+
+#rango-precio .noUi-connect {
+    background-color: var(--color-secundario);
+}
+
+#rango-precio .noUi-tooltip {
+    background-color: var(--color-primario);
+    color: #FFFFFF;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 12px;
+}
+/* Productos categorias */
+.productos-categoria {
+    background-color: var(--color-terciario);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.productos-categoria h2 {
+    color: var(--color-primario);
+    text-align: center;
+}
+/* Productos */
+.productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.producto {
+    background-color: #ffffff;
+    border: 1px solid var(--color-primario);
+    border-radius: 10px;
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.producto img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.producto h3 {
+    color: var(--color-primario);
+    font-size: 1.2em;
+}
+
+.producto p {
+    color: var(--color-secundario);
+    font-size: 1em;
+}
+
+.producto a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: var(--color-secundario);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.producto a:hover {
+    background-color: var(--color-primario);
+}

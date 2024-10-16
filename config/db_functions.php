@@ -51,6 +51,33 @@ function obtenerProductosPorCategoria($categoria_id = null) {
         return obtenerProductos();
     }
 }
+
+function obtenerProductosPorCategoriaYPrecio($categoria_id = null, $precio_min = 0, $precio_max = 1000) {
+    global $conn;
+    $sql = "SELECT p.* FROM Productos p 
+            JOIN ProductoCategorias pc ON p.id = pc.producto_id 
+            WHERE p.precioUnitario BETWEEN ? AND ?";
+    $params = [$precio_min, $precio_max];
+    $types = "dd";
+
+    if ($categoria_id) {
+        $sql .= " AND pc.categoria_id = ?";
+        $params[] = $categoria_id;
+        $types .= "i";
+    }
+
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        throw new mysqli_sql_exception("Error preparing statement: " . $conn->error);
+    }
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $productos = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+
+    return $productos;
+}
 //COMPROBAR USO
 // Función para obtener productos por vendedor
 function obtenerProductoPorId($producto_id) {
