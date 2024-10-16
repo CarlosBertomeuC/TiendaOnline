@@ -36,6 +36,16 @@ function obtenerProductos() {
     $result = $conn->query("SELECT * FROM Productos");
     return $result->fetch_all(MYSQLI_ASSOC);
 }
+function obtenerNombresProductos() {
+    global $conn;
+    $sql = "SELECT nombre FROM Productos";
+    $result = $conn->query($sql);
+    $nombres = [];
+    while ($row = $result->fetch_assoc()) {
+        $nombres[] = $row['nombre'];
+    }
+    return $nombres;
+}
 //Funcion para obtener productos por categoria
 function obtenerProductosPorCategoria($categoria_id = null) {
     global $conn;
@@ -52,10 +62,10 @@ function obtenerProductosPorCategoria($categoria_id = null) {
     }
 }
 
-function obtenerProductosPorCategoriaYPrecio($categoria_id = null, $precio_min = 0, $precio_max = 1000) {
+function obtenerProductosPorCategoriaYPrecio($categoria_id = null, $precio_min = 0, $precio_max = 1000, $nombre = null) {
     global $conn;
     $sql = "SELECT p.* FROM Productos p 
-            JOIN ProductoCategorias pc ON p.id = pc.producto_id 
+            LEFT JOIN ProductoCategorias pc ON p.id = pc.producto_id 
             WHERE p.precioUnitario BETWEEN ? AND ?";
     $params = [$precio_min, $precio_max];
     $types = "dd";
@@ -64,6 +74,12 @@ function obtenerProductosPorCategoriaYPrecio($categoria_id = null, $precio_min =
         $sql .= " AND pc.categoria_id = ?";
         $params[] = $categoria_id;
         $types .= "i";
+    }
+
+    if ($nombre) {
+        $sql .= " AND p.nombre LIKE ?";
+        $params[] = '%' . $nombre . '%';
+        $types .= "s";
     }
 
     $stmt = $conn->prepare($sql);

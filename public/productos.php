@@ -6,8 +6,9 @@ include '../includes/header.php';
 $categoria_id = isset($_GET['categoria']) ? $_GET['categoria'] : null;
 $precio_min = isset($_GET['precio_min']) ? $_GET['precio_min'] : 0;
 $precio_max = isset($_GET['precio_max']) ? $_GET['precio_max'] : 1000;
+$nombre = isset($_GET['nombre']) ? $_GET['nombre'] : null;
 
-$productos = obtenerProductosPorCategoriaYPrecio($categoria_id, $precio_min, $precio_max);
+$productos = obtenerProductosPorCategoriaYPrecio($categoria_id, $precio_min, $precio_max, $nombre);
 $categorias = obtenerCategorias();
 ?>
 
@@ -18,6 +19,9 @@ $categorias = obtenerCategorias();
     <title>Productos</title>
     <link rel="stylesheet" href="../assets/css/productos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <body>
     <section class="filtros">
@@ -45,6 +49,14 @@ $categorias = obtenerCategorias();
             </div>
         </section>
 
+        <!-- Filtrar por nombre -->
+         <section class="nombre">
+            <h2>Filtrar por Nombre</h2>
+            <div class="filtro-nombre">
+                <input type="text" id="nombre-input" placeholder="Buscar por nombre...">
+            </div>
+        </section>
+
         <button id="aplicar-filtros">Aplicar Filtros</button>
     </section>
     <!-- Productos por categoría -->
@@ -68,5 +80,6 @@ $categorias = obtenerCategorias();
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
     <script src="../assets/js/precio.js"></script>
+    <script src="../assets/js/autocomplete.js"></script>
 </body>
 </html>
