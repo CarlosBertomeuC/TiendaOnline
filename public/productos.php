@@ -19,9 +19,8 @@ $categorias = obtenerCategorias();
     <title>Productos</title>
     <link rel="stylesheet" href="../assets/css/productos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
 </head>
 <body>
     <section class="filtros">
@@ -29,7 +28,7 @@ $categorias = obtenerCategorias();
         <a href="productos.php">Limpiar Filtros</a>
         <!-- Explorar por categorías -->
         <section class="categorias">
-            <h2>Explora por Categorías</h2>
+            <h2>Explora las Categorias</h2>
             <div class="categorias-lista">
                 <select id="categoria-select">
                     <option value="">Todas las categorías</option>
@@ -52,11 +51,10 @@ $categorias = obtenerCategorias();
         <!-- Filtrar por nombre -->
          <section class="nombre">
             <h2>Filtrar por Nombre</h2>
-            <div class="filtro-nombre">
+            <div class="menu-item">
                 <input type="text" id="nombre-input" placeholder="Buscar por nombre...">
             </div>
         </section>
-
         <button id="aplicar-filtros">Aplicar Filtros</button>
     </section>
     <!-- Productos por categoría -->
@@ -77,9 +75,7 @@ $categorias = obtenerCategorias();
             <?php endif; ?>
         </div>
     </section>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
-    <script src="../assets/js/precio.js"></script>
     <script src="../assets/js/autocomplete.js"></script>
+    <script src="../assets/js/filtro.js"></script>
 </body>
 </html>

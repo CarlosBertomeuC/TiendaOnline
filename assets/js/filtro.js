@@ -29,9 +29,13 @@ document.addEventListener('DOMContentLoaded', function() {
         var precioMin = valores[0];
         var precioMax = valores[1];
         var categoria = document.getElementById('categoria-select').value;
+        var nombre = document.getElementById('nombre-input').value;
         var url = `productos.php?precio_min=${precioMin}&precio_max=${precioMax}`;
         if (categoria) {
             url += `&categoria=${categoria}`;
+        }
+        if (nombre) {
+            url += `&nombre=${nombre}`;
         }
         window.location.href = url;
     });
