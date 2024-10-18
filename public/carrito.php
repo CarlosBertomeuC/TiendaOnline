@@ -29,14 +29,16 @@ if (isset($_POST['actualizar'])) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito de Compras</title>
     <link rel="stylesheet" href="../assets/css/carrito.css">
 </head>
+
 <body>
-<?php
+    <?php
     // Verificar si el carrito está vacío
     if (empty($carrito)) {
         echo "<div class='carrito-vacio'>
@@ -81,4 +83,5 @@ if (isset($_POST['actualizar'])) {
         <a class="pagar" href="checkout.php">Proceder al Pago</a>
     </div>
 </body>
+
 </html>

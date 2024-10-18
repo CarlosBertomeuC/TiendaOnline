@@ -1,9 +1,19 @@
+:root {
+    --color-primario: #554f47;
+    --color-secundario: #817564;
+    --color-terciario: #ad9c84;
+    --color-fondo: #f4f4f4;
+    --color-texto: #333333;
+    --color-hover: #f1f1f1;
+    --color-sombra: rgba(0, 0, 0, 0.2);
+}
+
 /* Encabezado */
 header {
     text-align: center;
     padding: 20px 0;
     margin: 0;
-    background-color: #554f47;
+    background-color: var(--color-primario);
     color: #FFFFFF;
     font-size: x-large;
 }
@@ -33,11 +43,14 @@ header h1 {
     display: flex;
 }
 
-.navbar .nav-links li {
+.navbar .nav-links li{
     margin-left: 20px;
 }
+.navbar .nav-links li:not(.user-icon) {
+    margin-top: 10px; /* Ajusta este valor según sea necesario para mover los elementos más abajo */
+}
 
-.navbar .nav-links a {
+.navbar .nav-links a:not(.user-icon) {
     color: #FFFFFF;
     text-decoration: none;
     font-weight: bold;
@@ -46,8 +59,45 @@ header h1 {
 .navbar .nav-links a:hover {
     color:darkgoldenrod;
 }
-.logo{
+
+.logo {
     width: 5em;
     height: 5em;
     border-radius: 50%;
+}
+
+/* Estilos para el icono de usuario y el menú desplegable */
+.user-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.user-icon img {
+    width: 90px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.user-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: var(--color-primario);
+    box-shadow: 0 8px 16px var(--color-sombra);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.user-menu a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.user-icon .user-menu a {
+    color: var(--color-fondo) !important; /* Forzar el color a rojo */
+}
+
+.user-menu a:hover {
+    background-color: var(--color-secundario);
 }
