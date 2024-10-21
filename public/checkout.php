@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         actualizarStock($producto['id'], $producto['cantidad']);
         eliminarDelCarrito($usuario_id, $producto['id']);
     }
-
+    include 'procesarCheckout.php';
     header('Location: pedidorealizado.php');
     exit();
 }

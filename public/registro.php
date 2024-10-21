@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
     $contraseña = trim($_POST['contraseña']);
     $telefono = trim($_POST['telefono']);
-
     // Validaciones
     if (empty($nombre)) {
         $error[] = "El nombre es obligatorio.";
@@ -44,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($error)) {
         registrarUsuario($nombre, $apellidos, $email, $contraseña, 'cliente', $telefono);
         echo "Registro exitoso.";
+        include 'procesarRegistro.php';
         header('Location: login.php');
         exit();
     }

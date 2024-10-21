@@ -340,4 +340,50 @@ function usuarioExiste($email) {
     $stmt->close();
     return $existe;
 }
+
+function obtenerEmailUsuario($usuario_id) {
+    global $conn;
+    $sql = "SELECT email FROM Usuarios WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $usuario_id);
+    $stmt->execute();
+    $stmt->bind_result($email);
+    $stmt->fetch();
+    $stmt->close();
+    return $email;
+}
+
+function calcularTotalCarrito($usuario_id) {
+    global $conn;
+    $sql = "SELECT SUM(p.precioUnitario * c.cantidad) AS total 
+            FROM Carrito c 
+            JOIN Productos p ON c.producto_id = p.id 
+            WHERE c.usuario_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $usuario_id);
+    $stmt->execute();
+    $stmt->bind_result($total);
+    $stmt->fetch();
+    $stmt->close();
+    return $total;
+}
+
+// Función para obtener los productos de un pedido
+function obtenerProductosPedido($pedido_id) {
+    global $conn;
+    $sql = "SELECT p.nombre, lp.cantidad, lp.precioUnitario
+            FROM LineasPedido lp 
+            JOIN Productos p ON lp.producto_id = p.id 
+            WHERE lp.pedido_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $pedido_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $productos = [];
+    while ($row = $result->fetch_assoc()) {
+        $productos[] = $row;
+    }
+    $stmt->close();
+    return $productos;
+}
 ?>
