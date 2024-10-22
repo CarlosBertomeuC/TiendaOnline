@@ -7,10 +7,13 @@ require '../libraries/PHPMailer-master/src/PHPMailer.php';
 require '../libraries/PHPMailer-master/src/SMTP.php';
 require_once '../config/db_functions.php';
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $direccion_envio = $_POST['direccion_envio'];
     $usuario_id = $_SESSION['usuario_id'];
-    $total = calcularTotalCarrito($usuario_id); // Asumiendo que tienes una función para calcular el total del carrito
     $carrito = obtenerCarrito($usuario_id); // Asumiendo que tienes una función para obtener el carrito del usuario
 
     // Verificar stock
@@ -20,9 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         }
     }
-    
-    // Crear el pedido
-    $pedido_id = crearPedido($usuario_id, $total, $direccion_envio);
 
     // Guardar las líneas del pedido y actualizar el stock
     foreach ($carrito as $producto) {
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Obtener los detalles del pedido y los productos
-    $productos_pedido = obtenerProductosPedido($pedido_id); 
+    $productos_pedido = obtenerProductosPedido($pedido_id);
 
     // Construir el cuerpo del correo electrónico
     $body = "<h1>Hola, $nombre</h1>";
@@ -48,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $body .= "<li>";
         $body .= "<p>Nombre: {$producto['nombre']}</p>";
         $body .= "<p>Cantidad: {$producto['cantidad']}</p>";
-        $body .= "<p>Precio: {$producto['precio']} €</p>";
-        $body .= "<p>Total: " . ($producto['cantidad'] * $producto['precio']) . " €</p>";
+        $body .= "<p>Precio: {$producto['precioUnitario']} €</p>";
+        $body .= "<p>Total: " . ($producto['cantidad'] * $producto['precioUnitario']) . " €</p>";
         $body .= "</li>";
     }
 
@@ -72,11 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail->addAddress(obtenerEmailUsuario($usuario_id)); // Asumiendo que tienes una función para obtener el email del usuario
 
         $mail->isHTML(true);
-        $mail->Subject = 'Confirmación de Pedido';
+        $mail->Subject = 'Confirmacion de Pedido';
         $mail->Body = $body;
 
         $mail->send();
-        echo "Correo de confirmación enviado.";
+        echo "Correo de confirmacion enviado.";
     } catch (Exception $e) {
         echo "Error al enviar el correo: {$mail->ErrorInfo}";
     }
