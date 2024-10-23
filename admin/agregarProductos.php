@@ -3,6 +3,11 @@ session_start();
 include '../config/db_functions.php';
 include '../includes/header.php';
 
+if ($_SESSION['rol'] !== 'administrador') {
+    header("Location: ../public/login.php");
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];

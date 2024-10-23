@@ -1,4 +1,5 @@
 <?php
+
 include '../config/database.php';
 include '../config/db_functions.php';
 

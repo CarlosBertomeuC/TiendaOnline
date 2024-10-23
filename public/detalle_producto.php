@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include '../config/db_functions.php';
 
 // Verificar si se ha enviado un producto para añadir al carrito

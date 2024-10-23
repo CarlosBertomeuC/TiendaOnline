@@ -1,6 +1,7 @@
 <?php
-include '../config/db_functions.php';
 session_start();
+
+include '../config/db_functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include '../config/db_functions.php';
 
 $categoria_id = isset($_GET['categoria']) ? $_GET['categoria'] : null;
