@@ -8,7 +8,7 @@ if ($_SESSION['rol'] != 'administrador') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_GET['id']; // Asegúrate de que el ID del producto se pase correctamente
+    $id = $_GET['id'];
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
     $precioUnitario = $_POST['precioUnitario'];

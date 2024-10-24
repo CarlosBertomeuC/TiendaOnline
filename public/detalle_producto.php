@@ -2,6 +2,7 @@
 session_start();
 
 include '../config/db_functions.php';
+include '../includes/header.php';
 
 // Verificar si se ha enviado un producto para añadir al carrito
 if (isset($_POST['agregar_al_carrito'])) {
@@ -26,6 +27,23 @@ if (isset($_GET['id'])) {
         echo "Producto no encontrado.";
         exit();
     }
+
+    // Obtener las reseñas del producto
+    $reseñas = obtenerReseñasPorProducto($producto_id);
+
+    // Verificar si se ha enviado una reseña
+    if (isset($_POST['agregar_reseña'])) {
+        $calificacion = intval($_POST['calificacion']);
+        $comentario = $_POST['comentario'];
+        $usuario_id = $_SESSION['usuario_id'];
+
+        // Agregar la reseña
+        agregarReseña($usuario_id, $producto_id, $calificacion, $comentario);
+
+        // Recargar la página para mostrar la nueva reseña
+        header("Location: detalle_producto.php?id=$producto_id");
+        exit();
+    }
 } else {
     echo "ID de producto no especificado.";
     exit();
@@ -34,14 +52,15 @@ if (isset($_GET['id'])) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle del Producto</title>
     <link rel="stylesheet" href="../assets/css/detalleproducto.css">
 </head>
+
 <body>
-    <?php include '../includes/header.php'; ?>
     <div class="container">
         <div class="product-details">
             <h1 class="product-title"><?php echo htmlspecialchars($producto['nombre']); ?></h1>
@@ -60,7 +79,43 @@ if (isset($_GET['id'])) {
                 <input type="number" id="cantidad" name="cantidad" value="1" min="1" required>
                 <button class="add-to-cart" type="submit" name="agregar_al_carrito">Añadir al Carrito</button>
             </form>
+
+            <!-- Sección de reseñas -->
+            <div class="product-reviews">
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <h2>Agregar Reseña</h2>
+                    <form class="add-review-form" action="" method="post">
+                        <label for="calificacion">Calificación:</label>
+                        <select id="calificacion" name="calificacion" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <label for="comentario">Comentario:</label>
+                        <textarea id="comentario" name="comentario" required></textarea>
+                        <button type="submit" name="agregar_reseña">Agregar Reseña</button>
+                    </form>
+                <?php else: ?>
+                    <p>Debes iniciar sesión para agregar una reseña.</p>
+                <?php endif; ?>
+
+                <h2>Reseñas</h2>
+                <?php if (empty($reseñas)): ?>
+                    <p>No hay reseñas para este producto.</p>
+                <?php else: ?>
+                    <?php foreach ($reseñas as $reseña): ?>
+                        <div class="reseña">
+                            <p><strong><?php echo htmlspecialchars($reseña['nombre']); ?></strong> (<?php echo htmlspecialchars($reseña['calificacion']); ?>/5)</p>
+                            <p><?php echo htmlspecialchars($reseña['comentario']); ?></p>
+                            <p><small><?php echo htmlspecialchars($reseña['fecha_resena']); ?></small></p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </body>
+
 </html>

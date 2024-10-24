@@ -7,7 +7,11 @@
     --color-hover: #f1f1f1;
     --color-sombra: rgba(0, 0, 0, 0.2);
 }
+@import url('https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@400;700&display=swap');
 
+body{
+    font-family: 'Cascadia Code', monospace;
+}
 /* Encabezado */
 header {
     text-align: center;

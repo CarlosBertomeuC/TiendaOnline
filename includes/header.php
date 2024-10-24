@@ -1,5 +1,6 @@
 <header>
 <link rel="stylesheet" href="../assets/css/header.css">
+<link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@400;700&display=swap" rel="stylesheet">
     <div class="navbar">
         <img class="logo" src="../assets/images/logo.png" alt="Logo de la tienda">
         <ul class="nav-links">

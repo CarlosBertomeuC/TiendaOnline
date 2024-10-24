@@ -3,13 +3,13 @@
     --color-primario: #554f47;
     --color-secundario: #817564;
     --color-terciario: #ad9c84;
+    --color-texto: #ffffff;
 }
 
 /* Estilos generales */
 body {
     background-color: var(--color-secundario);
-    color: var(--color-primario);
-    font-family: Arial, sans-serif;
+    color: var(--color-texto);
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -29,21 +29,21 @@ body {
 /* Estilos para el título del producto */
 .product-title {
     font-size: 2em;
-    color: var(--color-primario);
+    color: var(--color-texto); 
     margin-bottom: 10px;
 }
 
 /* Estilos para la descripción del producto */
 .product-description {
     font-size: 1.2em;
-    color: var(--color-primario);
+    color: var(--color-texto); 
     margin-bottom: 20px;
 }
 
 /* Estilos para el precio del producto */
 .product-price {
     font-size: 1.5em;
-    color: var(--color-primario);
+    color: var(--color-texto); 
     margin-bottom: 20px;
 }
 
@@ -56,10 +56,12 @@ body {
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
 
 .add-to-cart:hover {
-    background-color: var(--color-secundario);
+    background-color: var(--color-terciario);
 }
 
 /* Estilos para la imagen del producto */
@@ -79,4 +81,77 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 20px;
+}
+
+/* Estilos para la sección de reseñas */
+.product-reviews {
+    margin-top: 40px;
+}
+
+.product-reviews h2 {
+    font-size: 1.8em;
+    color: var(--color-texto); 
+    margin-bottom: 20px;
+}
+
+/* Estilos para cada reseña individual */
+.reseña {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.reseña p {
+    margin: 5px 0;
+    color: var(--color-primario);
+}
+
+/* Estilos para el formulario de agregar reseña */
+.add-review-form {
+    margin-top: 30px;
+}
+
+.add-review-form h3 {
+    font-size: 1.5em;
+    color: var(--color-texto); 
+    margin-bottom: 10px;
+}
+
+.add-review-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--color-texto); 
+}
+
+.add-review-form select,
+.add-review-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    color: var(--color-primario); /* Mantener el color del texto dentro de los inputs */
+    border-radius: 5px;
+}
+
+.add-review-form button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-primario);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.add-review-form button:hover {
+    background-color: var(--color-terciario);
+}
+
+img {
+    border-radius: 50px;
 }

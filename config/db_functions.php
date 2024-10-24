@@ -371,4 +371,31 @@ function obtenerProductosPedido($pedido_id) {
     $stmt->close();
     return $productos;
 }
+
+
+function obtenerReseñasPorProducto($producto_id) {
+    global $conn;
+    $sql = "SELECT r.calificacion, r.comentario, r.fecha_resena, u.nombre 
+            FROM Reseñas r 
+            JOIN Usuarios u ON r.usuario_id = u.id 
+            WHERE r.producto_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $producto_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $reseñas = [];
+    while ($row = $result->fetch_assoc()) {
+        $reseñas[] = $row;
+    }
+    $stmt->close();
+    return $reseñas;
+}
+
+function agregarReseña($usuario_id, $producto_id, $calificacion, $comentario) {
+    global $conn;
+    $sql = "INSERT INTO Reseñas (usuario_id, producto_id, calificacion, comentario) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('iiis', $usuario_id, $producto_id, $calificacion, $comentario);
+    return $stmt->execute();
+}
 ?>
