@@ -90,3 +90,13 @@ CREATE TABLE Reseñas (
     FOREIGN KEY (usuario_id) REFERENCES Usuarios(id) ON DELETE CASCADE,
     FOREIGN KEY (producto_id) REFERENCES Productos(id) ON DELETE CASCADE
 );
+
+--Tabla Tarjetas
+CREATE TABLE Tarjetas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    numero_tarjeta VARCHAR(16) NOT NULL,
+    fecha_expiracion VARCHAR(5) NOT NULL,
+    cvv VARCHAR(3) NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES Usuarios(id) ON DELETE CASCADE
+);

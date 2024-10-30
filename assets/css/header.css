@@ -1,5 +1,4 @@
 :root {
-    --color-primario: #554f47;
     --color-secundario: #817564;
     --color-terciario: #ad9c84;
     --color-fondo: #f4f4f4;
@@ -17,7 +16,7 @@ header {
     text-align: center;
     padding: 20px 0;
     margin: 0;
-    background-color: var(--color-primario);
+    background-color: var(--color-secundario);
     color: #FFFFFF;
     font-size: x-large;
 }
@@ -86,7 +85,7 @@ header h1 {
     display: none;
     position: absolute;
     right: 0;
-    background-color: var(--color-primario);
+    background-color: var(--color-secundario);
     box-shadow: 0 8px 16px var(--color-sombra);
     z-index: 1;
     border-radius: 5px;

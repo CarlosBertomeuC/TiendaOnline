@@ -1,8 +1,8 @@
 /* Estilos generales */
 :root {
-    --color-primario: #554f47;
     --color-secundario: #817564;
     --color-terciario: #ad9c84;
+    --color-texto: black;
 }
 
 body {
@@ -21,7 +21,6 @@ body {
 /* Banner promocional */
 .banner {
     text-align: center;
-    margin: 20px 0;
 }
 
 .banner img {
@@ -38,7 +37,7 @@ body {
 }
 
 .ofertas-especiales h2 {
-    color: var(--color-primario);
+    color: var(--color-texto);
     text-align: center;
 }
 
@@ -51,7 +50,7 @@ body {
 }
 
 .productos-categoria h2 {
-    color: var(--color-primario);
+    color: var(--color-secundario);
     text-align: center;
 }
 /* Productos */
@@ -63,7 +62,7 @@ body {
 
 .producto {
     background-color: #ffffff;
-    border: 1px solid var(--color-primario);
+    border: 1px solid var(--color-secundario);
     border-radius: 10px;
     width: 200px;
     margin: 10px;
@@ -78,7 +77,7 @@ body {
 }
 
 .producto h3 {
-    color: var(--color-primario);
+    color: var(--color-secundario);
     font-size: 1.2em;
 }
 
@@ -98,7 +97,7 @@ body {
 }
 
 .producto a:hover {
-    background-color: var(--color-primario);
+    background-color: var(--color-secundario);
 }
 
 /* Categorías */
@@ -110,7 +109,7 @@ body {
 }
 
 .categorias h2 {
-    color: var(--color-primario);
+    color: var(--color-secundario);
     text-align: center;
 }
 
@@ -131,11 +130,11 @@ body {
 }
 
 .categorias-lista a:hover {
-    background-color: var(--color-primario);
+    background-color: var(--color-secundario);
 }
 
 .boton-todas-categorias {
-    background-color: var(--color-primario);
+    background-color: var(--color-secundario);
     color: #ffffff;
     padding: 10px;
     border-radius: 5px;
