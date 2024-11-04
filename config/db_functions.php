@@ -398,4 +398,16 @@ function agregarReseña($usuario_id, $producto_id, $calificacion, $comentario) {
     $stmt->bind_param('iiis', $usuario_id, $producto_id, $calificacion, $comentario);
     return $stmt->execute();
 }
+
+function guardarTarjeta($usuario_id, $numero_tarjeta, $fecha_expiracion, $cvv) {
+    global $conn;
+    // Insertar la tarjeta en la base de datos
+    $stmt = $conn->prepare("INSERT INTO Tarjetas (usuario_id, numero_tarjeta, fecha_expiracion, cvv) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("isss", $usuario_id, $numero_tarjeta, $fecha_expiracion, $cvv);
+    $stmt->execute();
+    $tarjeta_id = $stmt->insert_id;
+    $stmt->close();
+
+    return $tarjeta_id;
+}
 ?>

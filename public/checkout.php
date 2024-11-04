@@ -28,7 +28,31 @@ foreach ($carrito as $producto) {
     $total += $precio * $cantidad;
 }
 
-// Mostrar los productos del carrito
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $direccion_envio = $_POST['direccion_envio'];
+    $numero_tarjeta = $_POST['numero_tarjeta'];
+    $fecha_expiracion = $_POST['fecha_expiracion'];
+    $cvv = $_POST['cvv'];
+    // Verificar stock
+    foreach ($carrito as $producto) {
+        if (!verificarStock($producto['id'], $producto['cantidad'])) {
+            echo "No hay suficiente stock para el producto: {$producto['nombre']}. <a href='index.php'>Volver a la tienda</a>";
+            exit();
+        }
+    }
+    // Crear el pedido
+    $pedido_id = crearPedido($usuario_id, $total, $direccion_envio);
+    $tarjeta_id = guardarTarjeta($usuario_id,$numero_tarjeta, $fecha_expiracion, $cvv);
+    // Guardar las líneas del pedido y actualizar el stock
+    foreach ($carrito as $producto) {
+        crearLineaPedido($pedido_id, $producto['id'], $producto['cantidad'], $producto['precio']);
+        actualizarStock($producto['id'], $producto['cantidad']);
+        eliminarDelCarrito($usuario_id, $producto['id']);
+    }
+    include 'procesarCheckout.php';
+    header('Location: pedidorealizado.php');
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -65,36 +89,19 @@ foreach ($carrito as $producto) {
         <form method="POST" action="">
             <label for="direccion_envio">Dirección de Envío:</label>
             <input type="text" id="direccion_envio" name="direccion_envio" required>
-            <button type="submit">Realizar Pedido</button>
-        </form>
+        <h2>Información de la Tarjeta</h2>
+        <form method="POST" action="">
+        <label for="numero_tarjeta">Número de Tarjeta:</label>
+        <input type="text" id="numero_tarjeta" name="numero_tarjeta" pattern="\d{16}" maxlength="16" required>
+        
+        <label for="fecha_expiracion">Fecha de Expiración (MM/AA):</label>
+        <input type="text" id="fecha_expiracion" name="fecha_expiracion" pattern="\d{2}/\d{2}" placeholder="MM/AA" required>
+        
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" required>
+        
+        <button type="submit">Realizar Pedido</button>
+        
     </div>
 </body>
 </html>
-
-<?php
-// Procesar el formulario de checkout
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $direccion_envio = $_POST['direccion_envio'];
-
-    // Verificar stock
-    foreach ($carrito as $producto) {
-        if (!verificarStock($producto['id'], $producto['cantidad'])) {
-            echo "No hay suficiente stock para el producto: {$producto['nombre']}. <a href='index.php'>Volver a la tienda</a>";
-            exit();
-        }
-    }
-    
-    // Crear el pedido
-    $pedido_id = crearPedido($usuario_id, $total, $direccion_envio);
-
-    // Guardar las líneas del pedido y actualizar el stock
-    foreach ($carrito as $producto) {
-        crearLineaPedido($pedido_id, $producto['id'], $producto['cantidad'], $producto['precio']);
-        actualizarStock($producto['id'], $producto['cantidad']);
-        eliminarDelCarrito($usuario_id, $producto['id']);
-    }
-    include 'procesarCheckout.php';
-    header('Location: pedidorealizado.php');
-    exit();
-}
-?>
