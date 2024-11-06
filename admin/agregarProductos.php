@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $precioUnitario = $_POST['precioUnitario'];
     $estado = $_POST['estado'];
     $stock = $_POST['stock'];
+    $categoria_ids = $_POST['categoria_id'];
     $categoria_id = $_POST['categoria_id'];
 
     // Procesar la imagen
@@ -38,6 +39,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         echo "Error al subir el producto.";
     }
+    // Función para agregar una categoría a un producto
+    function agregarProductoCategoria($producto_id, $categoria_id)
+    {
+        global $conn;
+        $stmt = $conn->prepare("INSERT INTO ProductoCategorias (producto_id, categoria_id) VALUES (?, ?)");
+        $stmt->bind_param("ii", $producto_id, $categoria_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+    foreach ($categoria_ids as $categoria_id) {
+        agregarProductoCategoria($producto_id, $categoria_id);
+    }
 }
 
 $categorias = obtenerCategorias();
@@ -45,17 +58,20 @@ $categorias = obtenerCategorias();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Producto</title>
     <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Producto</title>
-    <link rel="stylesheet" href="../assets/css/listarproductos.css">
-</head>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agregar Producto</title>
+        <link rel="stylesheet" href="../assets/css/listarproductos.css">
+    </head>
+
 <body>
     <div class="container">
         <h1>Agregar Nuevo Producto</h1>
@@ -79,7 +95,7 @@ $categorias = obtenerCategorias();
             <input type="number" name="stock" required><br>
 
             <label for="categoria">Categoría:</label><br>
-            <select name="categoria_id" required>
+            <select name="categoria_id[]" multiple size="5" required>
                 <?php
                 foreach ($categorias as $categoria) {
                     echo "<option value='{$categoria['id']}'>{$categoria['nombre_categoria']}</option>";
@@ -94,4 +110,5 @@ $categorias = obtenerCategorias();
         </form>
     </div>
 </body>
+
 </html>

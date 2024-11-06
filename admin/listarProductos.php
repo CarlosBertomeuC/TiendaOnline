@@ -47,7 +47,7 @@ $productos = obtenerProductos();
                     <td><?php echo htmlspecialchars($producto['stock']); ?></td>
                     <td class="acciones">
                         <a href="editarProductos.php?id=<?php echo $producto['id']; ?>">Editar</a>
-                        <a href="eliminarProductos.php?id=<?php echo $producto['id']; ?>" onclick="return confirm('¿Estás seguro de eliminar esta categoría?');">Eliminar</a>
+                        <a href="eliminarProductos.php?id=<?php echo $producto['id']; ?>" onclick="return confirm('¿Estás seguro de eliminar este producto?');">Eliminar</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
